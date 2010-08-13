@@ -18,9 +18,6 @@ package de.cosmocode.palava.workqueue;
 
 import java.util.concurrent.Delayed;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 interface ResetableDelayed<E> extends Delayed {
 
     void reset();
