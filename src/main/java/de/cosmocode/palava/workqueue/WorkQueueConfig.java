@@ -16,7 +16,12 @@
 
 package de.cosmocode.palava.workqueue;
 
-
+/**
+ * Static constant utility class for workqueue config key names.
+ *
+ * @since 1.0
+ * @author Willi Schoenborn
+ */
 public final class WorkQueueConfig {
 
     public static final String PREFIX = "workQueue.";

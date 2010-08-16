@@ -16,6 +16,7 @@
 
 package de.cosmocode.palava.workqueue;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
@@ -33,9 +34,9 @@ import com.google.inject.name.Named;
  * @author Willi Schoenborn
  * @param <E> generic element type
  */
-final class BatchWorkQueue<E> extends ForwardingQueue<E> implements WorkQueue<E> {
+final class BatchWorkQueue<E extends Serializable> extends ForwardingQueue<E> implements WorkQueue<E> {
 
-    private final BlockingQueue<E> queue;
+    private final Queue<E> queue;
     private final Processor<E> processor;
     
     private final int batchSize;
@@ -58,7 +59,12 @@ final class BatchWorkQueue<E> extends ForwardingQueue<E> implements WorkQueue<E>
     public void run() {
         
         final List<E> all = Lists.newArrayList();
-        queue.drainTo(all);
+        
+        while (true) {
+            final E e = queue.poll();
+            if (e == null) break;
+            all.add(e);
+        }
         
         switch (batchSize) {
             case 0: {
@@ -67,7 +73,7 @@ final class BatchWorkQueue<E> extends ForwardingQueue<E> implements WorkQueue<E>
             }
             case 1: {
                 for (E e : all) {
-                    processor.apply(Collections.singleton(e));
+                    processor.apply(Collections.singletonList(e));
                 }
                 break;
             }

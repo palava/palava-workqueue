@@ -18,8 +18,20 @@ package de.cosmocode.palava.workqueue;
 
 import java.util.concurrent.Delayed;
 
-interface ResetableDelayed<E> extends Delayed {
+/**
+ * A resetable version of {@link Delayed}.
+ *
+ * @since 1.0
+ * @author Willi Schoenborn
+ */
+interface ResetableDelayed extends Delayed {
 
+    /**
+     * Resets the timeout of this delayed, thus
+     * forcing the same behaviour as a re-add.
+     * 
+     * @since 1.0
+     */
     void reset();
     
 }

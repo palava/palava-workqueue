@@ -109,11 +109,7 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
 
     @Override
     public Object[] toArray() {
-        final Object[] array = queue.toArray();
-        for (int i = 0; i < array.length; i++) {
-            array[i] = DelayedElement.class.cast(array[i]).element();
-        }
-        return array;
+        return Collections2.transform(queue, extractor).toArray();
     }
 
     @Override
@@ -165,16 +161,12 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
 
     @Override
     public boolean remove(Object o) {
-        @SuppressWarnings("unchecked")
-        final E e = (E) o;
-        return queue.remove(transformer.apply(e));
+        return Collections2.transform(queue, extractor).remove(o);
     }
 
     @Override
     public boolean contains(Object o) {
-        @SuppressWarnings("unchecked")
-        final E e = (E) o;
-        return queue.contains(transformer.apply(e));
+        return Collections2.transform(queue, extractor).contains(o);
     }
 
     @Override
@@ -184,12 +176,7 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        for (Object o : c) {
-            @SuppressWarnings("unchecked")
-            final E e = (E) o;
-            if (queue.contains(transformer.apply(e))) return true;
-        }
-        return false;
+        return Collections2.transform(queue, extractor).containsAll(c);
     }
 
     @Override
@@ -207,29 +194,12 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean removed = false;
-        for (Object o : c) {
-            @SuppressWarnings("unchecked")
-            final E e = (E) o;
-            removed |= queue.remove(transformer.apply(e));
-        }
-        return removed;
+        return Collections2.transform(queue, extractor).removeAll(c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        boolean removed = false;
-        
-        final Iterator<DelayedElement<E>> iterator = queue.iterator();
-        while (iterator.hasNext()) {
-            if (c.contains(iterator.next().element())) {
-                continue;
-            }
-            iterator.remove();
-            removed = true;
-        }
-        
-        return removed;
+        return Collections2.transform(queue, extractor).retainAll(c);
     }
 
     @Override

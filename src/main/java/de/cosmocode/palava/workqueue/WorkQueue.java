@@ -16,9 +16,17 @@
 
 package de.cosmocode.palava.workqueue;
 
+import java.io.Serializable;
 import java.util.Queue;
 
-public interface WorkQueue<E> extends Queue<E>, Runnable {
+/**
+ * 
+ *
+ * @since 
+ * @author Willi Schoenborn
+ * @param <E>
+ */
+public interface WorkQueue<E extends Serializable> extends Queue<E>, Runnable {
 
     
     

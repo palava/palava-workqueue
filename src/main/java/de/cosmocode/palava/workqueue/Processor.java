@@ -16,8 +16,18 @@
 
 package de.cosmocode.palava.workqueue;
 
+import java.util.List;
+
 import de.cosmocode.collections.Procedure;
 
-public interface Processor<T> extends Procedure<Iterable<T>> {
+/**
+ * A {@link Processor} defines the actual process of handling multiple
+ * elements of a {@link WorkQueue}.
+ *
+ * @since 1.0
+ * @author Willi Schoenborn
+ * @param <E> generic element type
+ */
+public interface Processor<E> extends Procedure<List<E>> {
 
 }

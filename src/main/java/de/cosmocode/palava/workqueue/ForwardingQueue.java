@@ -22,6 +22,13 @@ import java.util.Queue;
 
 import com.google.common.collect.ForwardingObject;
 
+/**
+ * Abstract decorator for {@link Queue}s.
+ *
+ * @since 1.0
+ * @author Willi Schoenborn
+ * @param <E> generic element type
+ */
 abstract class ForwardingQueue<E> extends ForwardingObject implements Queue<E> {
 
     @Override

@@ -29,7 +29,7 @@ import com.google.common.primitives.Longs;
  * @author Willi Schoenborn
  * @param <E> generic element type
  */
-final class DelayedElement<E> implements ResetableDelayed<E> {
+final class DelayedElement<E> implements ResetableDelayed {
 
     private final E element;
     private long endOfDelay;
