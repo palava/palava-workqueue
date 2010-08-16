@@ -18,7 +18,7 @@ package de.cosmocode.palava.workqueue;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.concurrent.BlockingQueue;
+import java.util.Queue;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +26,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -37,7 +36,7 @@ import com.google.inject.name.Named;
  * @author Willi Schoenborn
  * @param <E> generic element type
  */
-public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
+final class ConfigurableDelayQueue<E> implements Queue<E> {
 
     private final Function<DelayedElement<E>, E> extractor = new Function<DelayedElement<E>, E>() {
         
@@ -67,7 +66,7 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
         
     };
 
-    private final BlockingQueue<DelayedElement<E>> queue = new DelayQueue<DelayedElement<E>>();
+    private final Queue<DelayedElement<E>> queue = new DelayQueue<DelayedElement<E>>();
     
     private final long delayInMillis;
     
@@ -135,31 +134,6 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
     }
 
     @Override
-    public void put(E e) throws InterruptedException {
-        queue.put(transformer.apply(e));
-    }
-
-    @Override
-    public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
-        return queue.offer(transformer.apply(e), timeout, unit);
-    }
-
-    @Override
-    public E take() throws InterruptedException {
-        return queue.take().element();
-    }
-
-    @Override
-    public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-        return queue.poll(timeout, unit).element();
-    }
-
-    @Override
-    public int remainingCapacity() {
-        return queue.remainingCapacity();
-    }
-
-    @Override
     public boolean remove(Object o) {
         return Collections2.transform(queue, extractor).remove(o);
     }
@@ -170,21 +144,8 @@ public final class ConfigurableDelayQueue<E> implements BlockingQueue<E> {
     }
 
     @Override
-    public int drainTo(Collection<? super E> c) {
-        return drainTo(c, Integer.MAX_VALUE);
-    }
-
-    @Override
     public boolean containsAll(Collection<?> c) {
         return Collections2.transform(queue, extractor).containsAll(c);
-    }
-
-    @Override
-    public int drainTo(Collection<? super E> c, int maxElements) {
-        final Collection<DelayedElement<E>> collection = Lists.newArrayList();
-        final int drained = queue.drainTo(collection);
-        c.addAll(Collections2.transform(collection, extractor));
-        return drained;
     }
 
     @Override

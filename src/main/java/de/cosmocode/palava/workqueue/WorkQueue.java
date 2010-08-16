@@ -20,11 +20,11 @@ import java.io.Serializable;
 import java.util.Queue;
 
 /**
- * 
+ * A {@link Queue} which can be executed (processed) using it's {@link #run()} method.
  *
- * @since 
+ * @since 1.0
  * @author Willi Schoenborn
- * @param <E>
+ * @param <E> generic element type
  */
 public interface WorkQueue<E extends Serializable> extends Queue<E>, Runnable {
 

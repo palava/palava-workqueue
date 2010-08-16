@@ -23,6 +23,7 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ForwardingQueue;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

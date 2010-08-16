@@ -26,8 +26,14 @@ public final class WorkQueueConfig {
 
     public static final String PREFIX = "workQueue.";
     
+    /**
+     * 0 means no batch processing.
+     */
     public static final String BATCH_SIZE = PREFIX + "batchSize";
     
+    /**
+     * 0 means no delay.
+     */
     public static final String DELAY = PREFIX + "delay";
     
     public static final String DELAY_UNIT = PREFIX + "delayUnit";
