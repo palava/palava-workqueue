@@ -27,7 +27,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 /**
  * Configurable {@link DelayQueue} which supports a predefined delay.
@@ -36,7 +35,7 @@ import com.google.inject.name.Named;
  * @author Willi Schoenborn
  * @param <E> generic element type
  */
-final class ConfigurableDelayQueue<E> implements Queue<E> {
+public final class ConfigurableDelayQueue<E> implements Queue<E> {
 
     private final Function<DelayedElement<E>, E> extractor = new Function<DelayedElement<E>, E>() {
         
@@ -71,8 +70,7 @@ final class ConfigurableDelayQueue<E> implements Queue<E> {
     private final long delayInMillis;
     
     @Inject
-    public ConfigurableDelayQueue(@Named(WorkQueueConfig.DELAY) long delay, 
-        @Named(WorkQueueConfig.DELAY_UNIT) TimeUnit delayUnit) {
+    public ConfigurableDelayQueue(long delay, TimeUnit delayUnit) {
         this.delayInMillis = Preconditions.checkNotNull(delayUnit, "DelayUnit").toMillis(delay);
     }
 

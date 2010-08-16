@@ -20,13 +20,10 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ForwardingQueue;
 import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 /**
  * Batch based {@link WorkQueue}.
@@ -35,17 +32,13 @@ import com.google.inject.name.Named;
  * @author Willi Schoenborn
  * @param <E> generic element type
  */
-final class BatchWorkQueue<E extends Serializable> extends ForwardingQueue<E> implements WorkQueue<E> {
+public final class BatchWorkQueue<E extends Serializable> extends ForwardingQueue<E> implements WorkQueue<E> {
 
     private final Queue<E> queue;
     private final Processor<E> processor;
-    
     private final int batchSize;
 
-    @Inject
-    public BatchWorkQueue(BlockingQueue<E> queue, Processor<E> processor, 
-        @Named(WorkQueueConfig.BATCH_SIZE) int batchSize) {
-        
+    public BatchWorkQueue(Queue<E> queue, Processor<E> processor, int batchSize) {
         this.queue = Preconditions.checkNotNull(queue, "Queue");
         this.processor = Preconditions.checkNotNull(processor, "Processor");
         this.batchSize = batchSize;
