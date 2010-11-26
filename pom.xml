@@ -11,7 +11,7 @@
   <name>Palava WorkQueue</name>
   <version>0.1-SNAPSHOT</version>
   <scm>
-    <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-workqueue</developerConnection>
+    <developerConnection>scm:git:git@github.com:palava/${project.artifactId}.git</developerConnection>
   </scm>
   <dependencies>
     <dependency>
