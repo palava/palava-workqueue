@@ -48,21 +48,21 @@ public final class SetQueue<E> extends ForwardingQueue<E> {
 
     @Override
     public boolean offer(E element) {
-        // FIXME should be atomic
+        // should be atomic
         remove(element);
         return super.offer(element);
     }
 
     @Override
     public boolean add(E element) {
-        // FIXME should be atomic
+        // should be atomic
         remove(element);
         return super.add(element);
     }
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
-        // FIXME should be atomic
+        // should be atomic
         removeAll(collection);
         return super.addAll(collection);
     }
